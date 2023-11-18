@@ -23,3 +23,5 @@ capture/
 
 # CodeChecker
 .codechecker/
+
+.history/
