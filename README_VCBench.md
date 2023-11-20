@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: Sauron
  * @Date: 2023-11-15 17:50:35
- * @LastEditTime: 2023-11-17 22:54:55
+ * @LastEditTime: 2023-11-19 23:16:33
  * @LastEditors: Sauron
 -->
 # VCBench
@@ -11,6 +11,7 @@
 Ubuntu 22.04(20.04)
 ROS2 Humble
 CUDA 12(11)
+python3.8(3.10 is not supported)
 
 ## Setup
 ```shell
@@ -28,11 +29,11 @@ universe/external/open_planner:
     url: https://github.com/ZATiTech/open_planner.git
     version: main
 ```
-
+Known problems:
+1. Autoware requires python3.10 while Carla requires python3.7/3.8, you can create a conda virtual environment using python3.8 to install Autoware. During the compiling, you may meet errors caused by incompatible libs. The reason is because colcon will search both the system's lib&include and conda environment's lib&include, so you have to edit the CMakeLists.txt to specify the lib and include paths.
 Potential problems:
-1. "./setup-dev-env.sh" fails to download or update: *execute it again*.
-2. "rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO" fails to install some libs: *run "pip3 install -U xxx" directly then run "rosdep install" again*.
-3. "undefined reference problem for yabloc_common, costmap_generator, nebula_examples, nebula_tests, map_loader, grid_map_utils, probabilistic_occupancy_grid_map, ar_tag_based_localizer, yabloc_image_processing, yabloc_pose_initializer, ground_segmentation, yabloc_particle_filter, behavior_velocity_occlusion_spot_module,lanelet2_map_preprocessor,obstacle_velocity_limiter, static_centerline_optimizer":*add contents(TIFF, CURL, UUID, ) to their CMakeLists.txt,* example:
+1. "rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO" fails to install some libs: *run "pip3 install -U xxx" directly then run "rosdep install" again*.
+2. "undefined reference problem for yabloc_common, costmap_generator, nebula_examples, nebula_tests, map_loader, grid_map_utils, probabilistic_occupancy_grid_map, ar_tag_based_localizer, yabloc_image_processing, yabloc_pose_initializer, ground_segmentation, yabloc_particle_filter, behavior_velocity_occlusion_spot_module,lanelet2_map_preprocessor,obstacle_velocity_limiter, static_centerline_optimizer":*add contents(TIFF, CURL, UUID, ) to their CMakeLists.txt,* example:
 ```cmake
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(UUID REQUIRED uuid)
