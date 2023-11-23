@@ -9,7 +9,7 @@ SCRIPT_DIR=$(readlink -f "$(dirname "$0")")
 
 # Parse arguments
 args=()
-option_data_dir="$HOME/autoware_data"
+option_data_dir="$HYDRAOS/autoware_data"
 
 while [ "$1" != "" ]; do
     case "$1" in
