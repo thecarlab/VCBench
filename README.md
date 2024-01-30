@@ -2,10 +2,10 @@
  * @Description: 
  * @Author: Sauron
  * @Date: 2023-11-17 20:50:13
- * @LastEditTime: 2023-11-17 21:25:12
+ * @LastEditTime: 2024-01-29 21:21:50
  * @LastEditors: Sauron
 -->
-# VCBench is a vehicle computing benchmark for autonomous driving vehicles, it is based on Autoware.
+# VecBench is a vehicle computing benchmark for autonomous driving vehicles, it is based on Autoware. Please read README_VecBench.md to start.
 
 
 

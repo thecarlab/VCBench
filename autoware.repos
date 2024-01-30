@@ -106,3 +106,14 @@ repositories:
     type: git
     url: https://github.com/autowarefoundation/autoware_individual_params.git
     version: main
+  # VecBench
+  # range_estimation
+  #vecbench/range_estimation:
+  #  type: git
+  #  url: https://github.com/qirenwang/range_estimation
+  #  version: main
+  # li_battery_ws
+  #vecbench/li_battery_ws:
+  #  type: git
+  #  url: https://github.com/yongtaoyao/li_battery_ws
+  #  version: main
