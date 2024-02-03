@@ -2,13 +2,60 @@
  * @Description: 
  * @Author: Sauron
  * @Date: 2023-11-17 20:50:13
- * @LastEditTime: 2024-01-29 21:21:50
+ * @LastEditTime: 2024-02-03 10:07:04
  * @LastEditors: Sauron
 -->
-# VecBench is a vehicle computing benchmark for autonomous driving vehicles, it is based on Autoware. Please read README_VecBench.md to start.
+# VecBench is a vehicle computing benchmark for intelligent vehicles, it is based on Autoware.
+## Requirement (see amd64.env for detail)
+Ubuntu 22.04
+ROS2 Humble
+CUDA 12
+python 3.10+
+(Carla 0.9.13+)
 
+## Setup
+```shell
+conda deactivate #if you have a conda environment
+cd path_to_VecBench # $HOME/HydraOS_workspace/VecBench now, pls create a soft link first
+export HYDRAOS=$HOME/HydraOS_workspace # put this in your ~/.bashrc if you want
 
+# install Autoware, see: https://autowarefoundation.github.io/autoware-documentation/main/installation/autoware/source-installation/
+./setup-dev-env.sh # you should enable all the options and make sure this step is completed successfully
+mkdir src
+vcs import src < autoware.repos
+source /opt/ros/humble/setup.bash # if you install humble through source install, source the setup.bash in your_humble/install/
+rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
+colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+# try Autoware
+gdown -O $HYDRAOS/autoware_map/ 'https://docs.google.com/uc?export=download&id=1499_nsbUbIeturZaDj7jhUownh5fvXHd'
+unzip -d $HYDRAOS/autoware_map $HYDRAOS/autoware_map/sample-map-planning.zip
 
+source $HYDRAOS/VecBench/install/setup.bash # put this in your ~/.bashrc if you want
+ros2 launch autoware_launch planning_simulator.launch.xml map_path:=$HYDRAOS/autoware_map/sample-map-planning vehicle_model:=sample_vehicle sensor_model:=sample_sensor_kit
+
+# (optional) ROS2 Humble source install see: https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html
+# (optional) Carla&UE4 source install see: https://carla.readthedocs.io/en/latest/build_linux/, TODO: bridge carla and autoware
+```
+
+## Add your own module
+Edit autoware.repos, add your module's address. For example, you want to add a battery control module named battery_control, you can add:
+```shell
+vehicle/battery_control:
+    type: git
+    url: https://github.com/autowarefoundation/battery_control.git
+    version: main
+```
+which means your battery_control repo's main branch will be cloned to VecBench/src/vehicle/battery_control. Make sure that your module should be a ROS2 Humble package(package.xml and CMakeLists.txt exist), and it could be compiled by colcon. If your module depends on other github repos(which could not be added to package.xml), you can add a file named build_depends.repos to your module(an example [here](https://github.com/tier4/tier4_ad_api_adaptor/blob/tier4/universe/build_depends.repos)).
+
+## Available Modules
+- [Sensing function of Autoware](./VecBench_docs/Sensing.md)
+- [Range Estimation](https://github.com/qirenwang/range_estimation)
+- [Battery Diagnostic](https://github.com/yongtaoyao/li_battery_ws)
+- Multi-Tracking
+
+## Metrics
+TOD
+<!--
 # Autoware - the world's leading open-source software project for autonomous driving
 
 ![Autoware_RViz](https://user-images.githubusercontent.com/63835446/158918717-58d6deaf-93fb-47f9-891d-e242b02cba7b.png)
@@ -60,3 +107,4 @@ If you wish to use Autoware.AI, the previous version of Autoware based on ROS 1,
 
 - [Autoware Foundation homepage](https://www.autoware.org/)
 - [Support guidelines](https://autowarefoundation.github.io/autoware-documentation/main/support/support-guidelines/)
+-->

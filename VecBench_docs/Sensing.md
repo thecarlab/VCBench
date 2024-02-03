@@ -2,7 +2,11 @@
  * @Description: 
  * @Author: Sauron
  * @Date: 2024-01-29 21:32:17
- * @LastEditTime: 2024-01-30 00:43:39
+ * @LastEditTime: 2024-02-03 10:07:07
  * @LastEditors: Sauron
 -->
-The sensing module of Autoware contains multiple sensors, each sensor has a processing pipeline to handle the messages it samples.
+# Overview
+The sensing component of Autoware is a collection of modules that apply some primitive pre-processing to the raw sensor data.
+
+# Sensors
+- Lidar: 
